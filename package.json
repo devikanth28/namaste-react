@@ -1,0 +1,26 @@
+{
+  "name": "yes",
+  "version": "1.0.0",
+  "description": "This is Namaste React by DeviKanth",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/devikanth28/namaste-react.git"
+  },
+  "keywords": [
+    "react",
+    "namste-react"
+  ],
+  "author": "DeviKanth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/devikanth28/namaste-react/issues"
+  },
+  "homepage": "https://github.com/devikanth28/namaste-react#readme",
+  "devDependencies": {
+    "parcel": "^2.9.3"
+  }
+}
