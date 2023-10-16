@@ -1,44 +1,36 @@
 import React, { useEffect, useState } from 'react'
 import {useParams} from 'react-router-dom'
 import useRestaurentMenu from '../customehooks/useRestaurentMenu';
+import Header from './Header';
+import ResturentCategory from './ResturentCategory';
 const RestaurentMenu = () => {
     // const [resInfo, setResInfo] = useState(null)
     const {resId} = useParams();
-    const resInfo  = useRestaurentMenu(resId)
-    // useEffect(()=>{
-    //     featchMenu()
-    // },[]);
-    // const featchMenu = async () =>{
-    //     const data = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=17.4471055&lng=78.37959769999999&restaurantId=${resId}&catalog_qa=undefined&submitAction=ENTER`);
-    //     const json = await data.json();
-    //     console.log("json",json)
-    //     setResInfo(json.data)
-    //   }
+    const resInfo  = useRestaurentMenu(resId);
+    const [showIndex, setShowIndex] = useState(undefined);
       if(resInfo){
         const {name, cuisines, costForTwoMessage} = resInfo?.cards[0]?.card?.card?.info;
-        console.log(name,"name",cuisines,costForTwoMessage)
         const itemCards = resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card ?? [];
 
-        // Now you can use itemCards without any issues, and if any intermediate value is not iterable, it will default to an empty array.
-        
-        // console.log(resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards,"itemCards",itemCards)
       }
-    // console.log(resInfo)
+
+     const categories = resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(eachCard => eachCard.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory")
   return (
     <div>
-        {resInfo && <div>
-                <h3>{resInfo?.cards[0]?.card?.card?.info?.name}</h3>
-                <p>{resInfo?.cards[0]?.card?.card?.info?.cuisines}</p>
-                <p>{resInfo?.cards[0]?.card?.card?.info?.costForTwoMessage}</p>
-                {resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.title}
-                <ul>
-                  
-                {resInfo?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards?.map((eachItem)=>{
+      <Header/>
+        {resInfo && <div className='menu'>
+                <h3 className='fs-4'>{resInfo?.cards[0]?.card?.card?.info?.name}</h3>
+                <p>{resInfo?.cards[0]?.card?.card?.info?.cuisines.join(", ")} - {resInfo?.cards[0]?.card?.card?.info?.costForTwoMessage}</p>
+                <div className='container'>
+                {categories && categories.map((eachCategory, index)=>{
+                  const toggleMenu = index == showIndex ? true : false;
                   return(
-                    <li>{eachItem.card.info.name} - Rs.{eachItem.card.info.price / 100}</li>
+                    <ResturentCategory data = {eachCategory?.card?.card} showItem={index == showIndex ? true : false} setShowIndex={() => {
+                      setShowIndex(toggleMenu ? null : index); 
+                  }}/>
                   )
                 })}
-                </ul>
+                </div>
             </div>}
     
     </div>
