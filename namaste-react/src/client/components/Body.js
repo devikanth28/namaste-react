@@ -40,6 +40,13 @@ const Body = () => {
         setFiltredRes(filteredRestaurants);
     };
 
+    const handleTopRatedRestaurants = () => {
+        const topRatingRestaurants = listOfRest.filter((eachRes)=>{
+            return eachRes?.info?.avgRating > 4
+        })
+        setFiltredRes(topRatingRestaurants);
+    }
+
     if(onlineStatus == false){
        return <h1>You are offline! plaese check your internet connection</h1>
     }
@@ -48,7 +55,7 @@ const Body = () => {
         <div className='body'>
             <div className='search d-flex'>
                 <input type="search" className='search-box ms-3' value={searchText} onChange={(e)=>{setSearchText(e.target.value)}}/><button className='bg-success btn mx-3' onClick={()=>{handleSearch()}}>Search</button>
-            <button className='filtred-btn border-0 btn-danger filtred-btn py-1 rounded-3'>Top Rated Resturants</button>
+            <button className='filtred-btn border-0 btn-danger filtred-btn py-1 rounded-3' onClick={()=>{handleTopRatedRestaurants()}}>Top Rated Resturants</button>
             <div className='search'>
                context editor <input className='border ms-3 p-2' value={loggedInUser} onChange={(e)=>{setUserName(e.target.value)}}/>
             </div>
