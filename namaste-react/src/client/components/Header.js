@@ -16,12 +16,12 @@ const Header = () => {
     const userName = useSelector((store)=>store?.users?.users[0]?.name);
     console.log("first",userName)
     return(
-        <div className="header">
+        <div className="header d-flex justify-content-between p-3 m-3 border">
             <div className="logo-container">
                 <img src={FoodDelivaryLogo} height="64px" width="64px" alt="food delivary logo" />
             </div>
             <div className="nav-items" style={{background:"#99b195"}}>
-                    <ul className="align-items-baseline">
+                    <ul className="align-items-baseline d-flex " style={{listStyleType:"none"}}>
                         <li>Internet Status{onlineStatus ? "Online" :"Offline"}</li>
                         <Link to="/grocery"><li className="mt-2 text-decoration-none">Grocery</li></Link>
                         <li>Home</li>
