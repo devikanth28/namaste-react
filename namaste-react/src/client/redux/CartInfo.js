@@ -10,21 +10,31 @@ const CartInfo = () => {
   console.log(cartItems, "cartItems")
   const dispatch = useDispatch();
 
-  const handleClearCart = () => {
-    dispatch(clearCart());
-  };
+  useEffect(() => {
+    const handleClearCart = (e) => {
+      if (e.ctrlKey && e.key === 'm') {
+        dispatch(clearCart());
+      }
+    };
+
+    document.addEventListener('keydown', handleClearCart);
+
+    return () => {
+      document.removeEventListener('keydown', handleClearCart);
+    };
+  }, [dispatch]);
+
 
   useEffect(() => {
-    console.log("useEffect is calling.............");
     return () => {
-      console.log("useEffect return is calling.............");
       dispatch(clearCart());
     };
   },[]);
 
   return (
     <div>
-      <button className='btn btn-outline-danger' onClick={handleClearCart}>
+      <span>Note : press CTRL + M to clear the cart</span>
+      <button className='btn btn-outline-danger'>
         Clear Cart
       </button>
       {cartItems.length === 0 ? (
