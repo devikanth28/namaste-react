@@ -2,13 +2,14 @@ import React, { useState, useContext } from "react"
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import FoodDelivaryLogo from '../../images/FoodDelivaryLogo.jpg';
-import UserContext from "../common/UserContext";
+import UserContext, { CartContext } from "../common/UserContext";
 import useInternetStatus from "../customehooks/useInternetStatus";
 import LoginModal from "./authentication/LoginModal";
 const Header = () => {
     const onlineStatus = useInternetStatus();
     const {loggedInUser} = useContext(UserContext);
-    const cart = useSelector(store=>store.cart.items)
+    const {cart}= useContext(CartContext);
+  //  const cart = useSelector(store=>store.cart.items);
     const [isLoginOpen, setLoginOpen] = useState(false);
     const handleLogin = () =>{
        setLoginOpen(!isLoginOpen);
@@ -27,7 +28,7 @@ const Header = () => {
                         <li>Home</li>
                        <Link to="/about" className="mt-3 text-decoration-none"> <li>About Us</li></Link>
                         <li>Contact Us</li>
-                       <Link to={"/cart"} className="text-decoration-none me-3"> <li className="fw-bold">cart - {cart.length} Items</li></Link>
+                       <Link to={"/cart"} className="text-decoration-none me-3"> <li className="fw-bold">cart - {Object.keys(cart).length} Items</li></Link>
                         <li className="bg-danger rounded-2 cursor-pointer" onClick={()=>{handleLogin()}}>Login</li>
                         <li className="fw-bold">{loggedInUser}</li>
                         <li>{userName}</li>

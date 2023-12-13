@@ -10,7 +10,7 @@ import RestaurentMenu from './client/components/RestaurentMenu';
 import About from './client/components/About';
 import Grocery from './client/components/Grocery';
 import CartInfo from './client/redux/CartInfo';
-import UserContext from './client/common/UserContext';
+import UserContext, { CartContext } from './client/common/UserContext';
 import { store, persistor } from './client/common/AppStore'; // Import store and persistor
 import './App.css'
 
@@ -24,6 +24,7 @@ function App() {
     };
     setUserName(data.name);
   }, []);
+  const [cart, setCart] = useState([]);
 
   return (
     <div className="App">
@@ -32,6 +33,7 @@ function App() {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
       <Provider store={store}>
         <UserContext.Provider value={{ loggedInUser: userName, setUserName }}>
+          <CartContext.Provider value={{cart, setCart}}>
           <PersistGate persistor={persistor}>
             <Router>
               <Routes>
@@ -43,6 +45,7 @@ function App() {
               </Routes>
             </Router>
           </PersistGate>
+          </CartContext.Provider>
         </UserContext.Provider>
       </Provider>
     </div>
